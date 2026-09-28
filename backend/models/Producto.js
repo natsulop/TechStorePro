@@ -1,18 +1,19 @@
-//Importar mongoose para usar schema y model
+// Importar Mongoose para usar Schema y model
+
 const mongoose = require('mongoose');
 
-// schema: define los casmpos de cada documento en atlas 
+// Schema: define los campos de cada documento en Atlas
 const productoSchema = new mongoose.Schema({
-    id:          { type: Number, required: true}, // numero (1,2,3.....)
-    icono:          { type: String, required: true }, // emoji del producto
-    nombre:         { type: String, required: true }, // nombre  del producto
-    descripcion:    { type: String, required: true }, //  texto descriptivo
-    precio:         { type: String, required: true }, //  "$8.999.000"- texto no numero 
-    imagen:         { type: String, required: true } // ruta de imagen
+    id:                 { type: Number, required: true }, // numero (1, 2, 3...)
+    icono:              { type: String, required: true }, // emoji del producto
+    nombre:             { type: String, required: true }, // nombre del producto
+    descripcion:        { type: String, required: true }, // texto descriptivo
+    precio:             { type: String, required: true }, // "$89.999.000" - texto, no numero
+    imagen:             { type: String, required: true }  // ruta de la imagen
 });
 
-// crea el model - mongoose busca la coleccion 'productos' en atlas
-const producto = mongoose.model('Producto', productoSchema);
+// crea el Model - mongoose busca la coleccion 'producto' en Atlas
+const Producto = mongoose.model('Producto', productoSchema);
 
 // Exportar para poder usarlo en server.js
-module.exports = producto;
+module.exports = Producto;

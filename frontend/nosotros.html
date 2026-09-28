@@ -7,16 +7,20 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- BARRA SCROLL — S06: div vacío, el CSS lo posiciona y el JS le da el ancho -->
-    <div class="barra-scroll" id="barra-scroll"></div>
-  <!-- HEADER — Igual en todas las páginas -->
+  <!-- BARRA SCROLL -->
+  <div class="barra-scroll" id="barra-scroll"></div>
+
+  <!-- HEADER -->
   <header class="header">
     <div class="header-logo">
       <span class="logo-icono">💻</span>
       <span class="logo-texto">TechStore Pro</span>
     </div>
+
     <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
 
     <nav id="nav-menu" class="nav-menu">
@@ -25,104 +29,82 @@
       <a href="nosotros.html" class="activo">Nosotros</a>
       <a href="contacto.html">Contacto</a>
       <a href="registro.html">Registro</a>
-   
+    </nav>
 
-      <div class="header-acciones">
-        <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
-        <a href="carrito.html" class="carrito-badge-contenedor" aria-label="Ver carrito">
-          <span>🛒</span>
-          <span class="carrito-badge" id="carrito-badge">0</span>
-        </a>
-      </div>
-    </header>
-  
+    <div class="header-acciones">
+      <!-- NUEVO - antes del btn-tema -->
+      <a href="login.html" id="nav-login" class="btn-login-header">Login</a>
+      <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
+      <a href="carrito.html" class="carrito-badge-contenedor" aria-label="Ver carrito">
+        <span>🛒</span>
+        <span class="carrito-badge" id="carrito-badge">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
   <main>
-
-    <!-- Page header -->
     <div class="page-header">
       <p class="breadcrumb"><a href="index.html">Inicio</a> / Nosotros</p>
       <h1>Quiénes somos</h1>
       <p>Conoce la historia, el equipo y los valores que nos mueven.</p>
     </div>
 
-    <!-- --------------------------------------------------------
-         MISIÓN Y VISIÓN — Grid de 2 columnas (Flexbox/Grid)
-         -------------------------------------------------------- -->
     <section class="seccion-mision">
       <div class="mision-texto">
-        <!-- ✏️ Personaliza con la historia real de tu proyecto -->
         <h2>Nuestra historia</h2>
-        <p>Cuenta brevemente el origen de tu proyecto o negocio. ¿Por qué nació? ¿Qué problema resuelve? ¿Cuándo comenzó?</p>
-        <p>Puedes hablar sobre los fundadores, el contexto local (Garzón, Huila) y el impacto que quieren generar en la comunidad.</p>
+        <p>TechStore Pro nació en Garzón, Huila, con la misión de acercar la tecnología de calidad a toda la región. Comenzamos como un pequeño emprendimiento y hoy somos la tienda de tecnología preferida por cientos de clientes.</p>
+        <p>Nos apasiona ofrecer productos de las mejores marcas con asesoría personalizada y precios competitivos.</p>
         <a href="contacto.html" class="btn btn-primario" style="margin-top:8px;">Contáctanos</a>
       </div>
       <div class="mision-valores">
-        <!-- ✏️ Personaliza con los valores de tu proyecto -->
         <div class="valor">
           <h3>🎯 Misión</h3>
-          <p>Describe qué hace tu proyecto o empresa, para quién y cómo lo hace.</p>
+          <p>Ofrecer tecnología de vanguardia con la mejor atención al cliente, facilitando la vida digital de nuestros usuarios en el Huila.</p>
         </div>
         <div class="valor">
           <h3>🚀 Visión</h3>
-          <p>Describe a dónde quiere llegar tu proyecto en el futuro (5-10 años).</p>
+          <p>Ser la tienda de tecnología líder en el sur del Huila, reconocida por nuestra calidad, innovación y compromiso con la comunidad.</p>
         </div>
         <div class="valor">
           <h3>💎 Valores</h3>
-          <p>Lista 3-4 valores que guían el trabajo: honestidad, calidad, innovación, compromiso...</p>
+          <p>🔹 Honestidad<br>🔹 Calidad<br>🔹 Innovación<br>🔹 Compromiso</p>
         </div>
       </div>
     </section>
 
-    <!-- --------------------------------------------------------
-         EQUIPO — Grid de tarjetas con Flexbox interno
-         -------------------------------------------------------- -->
     <section class="seccion-equipo">
       <div class="seccion-header">
         <h2>Nuestro equipo</h2>
         <p>Las personas detrás del proyecto</p>
       </div>
 
-      <!--
-        Grid del equipo — usa grid-equipo (3 columnas en desktop)
-        ✏️ Agrega un .miembro por integrante del grupo
-      -->
       <div class="grid-equipo">
-
         <div class="miembro">
-          <!--
-            ✏️ Opción A: foto real
-            <img src="img/integrante1.jpg" alt="Nombre" class="miembro-avatar">
-
-            Opción B: placeholder con emoji (más fácil)
-          -->
           <div class="miembro-avatar-placeholder">👤</div>
-          <h3>Nombre Apellido</h3>
-          <span class="cargo">Rol en el proyecto</span>
-          <p>Breve descripción: habilidades, responsabilidades o dato interesante del integrante.</p>
+          <h3>Carlos Pérez</h3>
+          <span class="cargo">CEO & Fundador</span>
+          <p>Apasionado por la tecnología con más de 10 años de experiencia en ventas y atención al cliente.</p>
         </div>
 
         <div class="miembro">
           <div class="miembro-avatar-placeholder">👤</div>
-          <h3>Nombre Apellido</h3>
-          <span class="cargo">Rol en el proyecto</span>
-          <p>Breve descripción: habilidades, responsabilidades o dato interesante del integrante.</p>
+          <h3>María González</h3>
+          <span class="cargo">Gerente de Ventas</span>
+          <p>Experta en asesoría tecnológica y servicio al cliente. Ayuda a cada cliente a encontrar el equipo perfecto.</p>
         </div>
 
         <div class="miembro">
           <div class="miembro-avatar-placeholder">👤</div>
-          <h3>Nombre Apellido</h3>
-          <span class="cargo">Rol en el proyecto</span>
-          <p>Breve descripción: habilidades, responsabilidades o dato interesante del integrante.</p>
+          <h3>Andrés Ramírez</h3>
+          <span class="cargo">Soporte Técnico</span>
+          <p>Especialista en hardware y software. Garantiza que cada equipo funcione a la perfección.</p>
         </div>
-
-        <!-- ✏️ Si el grupo tiene más de 3 integrantes, agrega más bloques .miembro -->
-
       </div>
     </section>
-
   </main>
 
-  <!-- FOOTER — Igual en todas las páginas -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-contenido">
       <div class="footer-marca">
@@ -136,6 +118,7 @@
         <a href="productos.html">Productos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
+        <a href="registro.html">Registro</a>
       </nav>
       <div class="footer-contacto">
         <h4>Contacto</h4>
@@ -150,6 +133,5 @@
   </footer>
 
   <script src="js/main.js"></script>
-
 </body>
 </html>

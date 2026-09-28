@@ -32,6 +32,8 @@
     </nav>
 
     <div class="header-acciones">
+      <!-- NUEVO - antes del btn-tema -->
+      <a href="login.html" id="nav-login" class="btn-login-header">Login</a>
       <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">🌙</button>
       <a href="carrito.html" class="carrito-badge-contenedor" aria-label="Ver carrito">
         <span>🛒</span>
@@ -54,7 +56,11 @@
       <div class="carrito-acciones">
         <button id="btn-vaciar" class="btn btn-secundario">🗑️ Vaciar carrito</button>
         <a href="index.html" class="btn btn-primario">Seguir comprando</a>
+        <!-- NUEVO -->
+         <button id="btn-confirmar" class="btn btn-primario">💳 Pagar con Wompi</button>
       </div>
+      <!-- Mensaje de resultado del checkout -->
+      <div id="checkout-mensaje" style="display:none; margin-top:20px;"></div>
     </section>
   </main>
 
@@ -72,6 +78,7 @@
         <a href="productos.html">Productos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
+        <a href="registro.html">Registro</a>
       </nav>
       <div class="footer-contacto">
         <h4>Contacto</h4>
@@ -86,5 +93,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <!-- Script oficial del Widget de Wompi — cargar desde su CDN -->
+  <script src="https://checkout.wompi.co/widget.js"></script>
 </body>
 </html>
