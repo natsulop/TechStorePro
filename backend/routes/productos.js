@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 //2B GET /:id - un solo producto por su _id (publico, no requiere token)
-// Ejemplo de URL: GET http://localhost:3000/api/productos/64a1b2c3d4e5f6a7b8c9d0e1
+// Ejemplo de URL: GET http://localhost:3000/api/productos
 router.get('/:id', async (req, res) => {
     try {
         //req.params id lee el valor que llega en la URL despues de /api/productos/
