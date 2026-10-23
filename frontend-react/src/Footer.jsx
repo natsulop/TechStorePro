@@ -1,133 +1,91 @@
+import { Link } from "react-router-dom";
+
+const menu = [
+  { ruta: "/", texto: "Inicio" },
+  { ruta: "/productos", texto: "Productos" },
+  { ruta: "/nosotros", texto: "Nosotros" },
+  { ruta: "/contacto", texto: "Contacto" },
+];
+
+const redes = ["Instagram", "Facebook", "WhatsApp"];
+
 function Footer() {
   return (
-    <footer
-  className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat text-white px-6 py-10 flex flex-col"
-style={{ backgroundImage: "url('/tecno.jpg')" }}
->
-{/* Capa oscura para mejorar la lectura */}
-<div className="absolute inset-0 bg-black/60"></div>
+    <footer className="bg-paper pt-24 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 text-ink">
+        {/* CONTACTO Y ENLACES */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="flex flex-col gap-3 text-sm text-gray-700">
+            <p>
+              Calle 7 # 8-30<br />
+              Garzón, Huila, Colombia
+            </p>
+            <p>info@miproyecto.co</p>
+            <p className="font-mono">300 000 0000</p>
+          </div>
 
-{/* Contenido del footer */}
-<div className="relative z-10 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 gap-8 text-sm">
+            <div>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">
+                Menú
+              </h3>
+              <ul className="flex flex-col gap-2.5 text-gray-700">
+                {menu.map((enlace) => (
+                  <li key={enlace.ruta}>
+                    <Link to={enlace.ruta} className="hover:text-ink transition-colors">
+                      {enlace.texto}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-4">
+                Redes
+              </h3>
+              <ul className="flex flex-col gap-2.5 text-gray-700">
+                {redes.map((red) => (
+                  <li key={red}>
+                    <a href="#" className="hover:text-ink transition-colors">
+                      {red}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
 
-    {/* Marca */}
-    <div>
-      <h2 className="text-xl font-bold mb-3">
-        TechStore Pro
-      </h2>
+        {/* LÍNEA CON BOTÓN */}
+        <div className="flex items-center gap-4 mt-16">
+          <div className="h-px flex-1 bg-gray-100"></div>
+          <Link
+            to="/contacto"
+            className="bg-ink text-paper rounded-full px-5 py-2 text-xs font-semibold hover:bg-accent transition-colors"
+          >
+            Escríbenos
+          </Link>
+        </div>
 
-      <p className="text-sm text-gray-200">
-        Tecnología y accesorios para todos tus proyectos.
-      </p>
-    </div>
+        {/* TEXTO LEGAL */}
+        <div className="flex flex-col md:flex-row justify-between gap-4 mt-8 text-xs">
+          <p className="max-w-xs text-gray-500 leading-relaxed">
+            Proyecto formativo SENA ADSO - Ficha 3229944. Tecnología con asesoría real.
+          </p>
+          <p className="font-mono text-gray-500">© 2026 - Fase 5 React & Tailwind</p>
+        </div>
 
-    {/* Enlaces */}
-    <div>
-      <h3 className="font-semibold mb-3">
-        Navegación
-      </h3>
+        {/* WORDMARK GIGANTE, RECORTADO ABAJO */}
+        <p
+          aria-hidden="true"
+          className="font-wordmark whitespace-nowrap leading-none text-center select-none text-[clamp(2rem,8.2vw,7.5rem)] text-gray-100 mt-12 mb-[-0.18em]"
+        >
+          TECH<span className="text-accent/20">STORE</span>
+        </p>
+      </div>
+    </footer>
+  );
+}
 
-      <ul className="space-y-2 text-sm text-gray-200">
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Inicio
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Productos
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Ofertas
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Contacto
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    {/* Ayuda */}
-    <div>
-      <h3 className="font-semibold mb-3">
-        Ayuda
-      </h3>
-
-      <ul className="space-y-2 text-sm text-gray-200">
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Preguntas frecuentes
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Envíos
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Devoluciones
-          </a>
-        </li>
-
-        <li>
-          <a href="#" className="hover:text-white transition">
-            Términos y condiciones
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    {/* Contacto */}
-    <div>
-      <h3 className="font-semibold mb-3">
-        Contacto
-      </h3>
-
-      <p className="text-sm text-gray-200">
-        📧 contacto@techstore.com
-      </p>
-
-      <p className="text-sm text-gray-200 mt-2">
-        📞 +57 300 123 4567
-      </p>
-
-      <p className="text-sm text-gray-200 mt-2">
-        📍 Colombia
-      </p>
-    </div>
-
-  </div>
-
-  {/* Copyright */}
-  <div className="border-t border-white/30 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-
-    <p className="text-sm">
-      © 2026 TechStore Pro
-    </p>
-
-    <p className="text-sm text-gray-300">
-      Hecho con Tailwind CSS
-    </p>
-
-  </div>
-
-</div>
-</footer>
-  
-
-  )
-} 
-   
-export default Footer
+export default Footer;
