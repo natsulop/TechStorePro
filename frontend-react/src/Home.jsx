@@ -73,7 +73,9 @@ function Home() {
         </div>
 
         {destacado && (
-          <div className="relative w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden">
+          <Link
+          to={"/productos/" + destacado.id}
+          className="relative w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden">
             <img
               src={destacado.imagen}
               alt={destacado.nombre}
@@ -86,7 +88,7 @@ function Home() {
                 {destacado.precio}
               </p>
             </div>
-          </div>
+          </Link>
         )}
       </section>
 
