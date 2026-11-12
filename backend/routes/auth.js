@@ -5,10 +5,35 @@ const jwt       = require('jsonwebtoken');
 const Usuario   = require('../models/Usuario');
 const router    = express.Router();
 
+const dominiosPermitidos = [
+  'gmail.com', 'hotmail.com','outlook.com','yahoo.com',
+  'icloud.com', 'me.com', 'mac.com','soy.sena.edu.co',
+];
+
 //2. Post /api/auth/registro - Crear cuenta nueva
 router.post('/registro', async (req, res) => {
     try {
-        const { nombre, email, password, rol, departamento, municipio } = req.body;
+      // el rol No se lee del cuerpo: lo que manda el navegador no es de fiar 
+        const { nombre, email, password, departamento, municipio } = req.body;
+
+        // Validar los datos: el servidor revisa aunque la pagina ya lo haya hecho 
+        if (!nombre || nombre.trim().length <3) {
+          return res.status(400).json({error: 'EL nombre debe tener al menos 3 caracteres'});
+        }
+        if (!emai || !/\S+@\.\S+$/.test(email)) {
+          return res.status(400).json({error: ' El correo no es valido '});
+        }
+        // El dominio es lo que va después de la última @
+const dominio = email.slice(email.lastIndexOf('@') + 1).toLowerCase();
+
+if (!dominiosPermitidos.includes(dominio)) {
+    return res.status(400).json({
+        error: 'Usa un correo de Gmail, Hotmail, Outlook, Yahoo o iCloud'
+    });
+}
+        if (!password || password.length <6) {
+          return res.status(400).json({error: 'La contraseña debe tener almenos 6 caracteres '})
+        }
 
         // verificar que el email no exista ya
         const existe = await Usuario.findOne({ email });
@@ -18,7 +43,7 @@ router.post('/registro', async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
 
         // Guardar el usuario con la constraseña encriptada
-        const usuario = await Usuario.create({ nombre, email, password: hash, rol, departamento, municipio });
+        const usuario = await Usuario.create({ nombre, email, password: hash, departamento, municipio, rol:'cliente ' });
 
         res.status(201).json({ mensaje: 'Usuario creado correctamente', id: usuario._id });
     } catch (err) {
