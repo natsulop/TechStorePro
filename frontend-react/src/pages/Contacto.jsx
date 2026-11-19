@@ -1,5 +1,5 @@
 import { useState } from "react";
-import campo, {claseInput } from "./Campo.jsx"
+import Campo, { claseInput } from "../components/Campo.jsx";
 
 const URL_API = "http://localhost:3000/api/contacto";
 
@@ -16,6 +16,7 @@ const datosContacto = [
   { titulo: "Teléfono", lineas: ["300 000 0000", "8 am - 6 pm · Lun a Sáb"] },
   { titulo: "Correo", lineas: ["info@miproyecto.co"] },
 ];
+
 
 function Contacto() {
   const [form, setForm] = useState(FORM_VACIO);
@@ -173,6 +174,7 @@ function Contacto() {
               Mensaje enviado. Te contactaremos pronto.
             </p>
           )}
+
           {estado === "error" && (
             <p role="alert" className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark">
               {mensajeError}
@@ -198,5 +200,5 @@ function Contacto() {
     </div>
   );
 }
-
+ 
 export default Contacto;

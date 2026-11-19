@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import ProductCard from "./ProductCard.jsx";
-import ProductoModal from "./ProductoModal.jsx"
+import ProductCard from "../components/ProductCard";
+import ProductoModal from "../components/ProductoModal";
 
-function precioNumero(p) {
-  return Number(p.precio.replace(/\D/g, ""));
+function precioNumeros(p) {
+  return Number(p.precio.replace(/\D/g, ""))
 }
 
 function Productos() {
@@ -12,7 +12,7 @@ function Productos() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [seleccionado, setSeleccionado] = useState(null);
-  const [orden, setOrden] = useState("original");
+  const [orden, setOrden] = useState("original")
 
   function cargarProductos() {
     setCargando(true);
@@ -31,12 +31,16 @@ function Productos() {
   const filtrados = productos.filter((p) =>
     p.nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
+
   const ordenados = [...filtrados];
   if (orden === "menor") {
-    ordenados.sort((a,b) => precioNumero(a) - precioNumero(b));  
+    ordenados.sort((a, b) => precioNumero(a) - precioNumero(b));
   }
   if (orden === "mayor") {
-    ordenados.sort((a,b) => precioNumero(b) - precioNumero(a));
+    ordenados.sort((a, b) => precioNumero(b) - precioNumero(a))
+  }
+  if (orden === "nombre") {
+    ordenados.sort((a, b) => a.nombre.localeCompare(b.nombre));
   }
 
   return (
@@ -49,15 +53,12 @@ function Productos() {
           onChange={(e) => setBusqueda(e.target.value)}
           className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-card focus:outline-none focus:border-ink"
         />
-        <select
-  value={orden}
-  onChange={(e) => setOrden(e.target.value)}
-  className="px-4 py-2 border border-gray-300 rounded-card bg-paper text-sm focus:outline-none focus:border-ink"
->
-  <option value="original">Orden original</option>
-  <option value="menor">Menor precio</option>
-  <option value="mayor">Mayor precio</option>
-</select>
+        <select value={orden} onChange={(e) => setOrden(e.target.value)} className="px-4 py-2 border-gray-300 rounded-card bg-paper text-sm focus:outline-none focus:border-ink">
+          <option value="original">Orden original</option>
+          <option value="menor">Menor precio</option>
+          <option value="mayor">Mayor precio</option>
+          <option value="nombre">Nombre A-Z</option>
+        </select>
         {busqueda && (
           <p className="text-sm text-gray-500 whitespace-nowrap">
             {filtrados.length} {filtrados.length === 1 ? "resultado" : "resultados"}
@@ -65,10 +66,10 @@ function Productos() {
         )}
       </div>
 
-      {cargando && <p className="text-center text-gray-500 py-10">Cargando productos...</p>}
+      {cargando && <p className="text-center py-10">Cargando productos...</p>}
       {error && <p className="text-center text-accent-dark py-10">{error}</p>}
       {!cargando && !error && (
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ordenados.map((p) => (
             <ProductCard
               key={p.id}
@@ -82,20 +83,18 @@ function Productos() {
           ))}
         </section>
       )}
-
       {!cargando && !error && filtrados.length === 0 && (
         <p className="text-center text-gray-500 py-10">
           No se encontraron productos con ese nombre.
         </p>
       )}
+
       {seleccionado && (
-        <ProductoModal
-        producto={seleccionado}
-        onCerrar={() => setSeleccionado(null)}
+        <ProductoModal producto={seleccionado} onCerrar={() => setSeleccionado(null)}
         />
       )}
     </div>
   );
- }
+}
 
 export default Productos;

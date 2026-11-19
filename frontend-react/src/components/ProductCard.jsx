@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CartContext } from "./CartContext.jsx";
+import { CartContext } from "../context/CartContext";
 
 function ProductCard(props) {
   const { agregarAlCarrito } = useContext(CartContext);
@@ -15,9 +15,7 @@ function ProductCard(props) {
   }
 
   return (
-    <article 
-    onClick={props.onVer}
-    className="group relative aspect-4/5 overflow-hidden rounded-3xl bg-ink">
+    <article onClick={props.onVer} className="group relative aspect-4/5 overflow-hidden rounded-3xl bg-ink">
       <img
         src={props.imagen.replace("w=400&h=250", "w=800&h=1000")}
         alt={props.nombre}

@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ProductCard from "./ProductCard.jsx";
+import ProductCard from "../components/ProductCard";
+import ProductoModal from "../components/ProductoModal";
 
 function Home() {
   const navegar = useNavigate();
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [seleccionado, setSeleccionado] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/productos")
@@ -20,7 +22,7 @@ function Home() {
   const catalogo = productos.slice(0, 4);
 
   const estadisticas = [
-    { valor: cargando || error ? "-" : productos.length, etiqueta: "productos" },
+    { valor: cargando ? "Cargando" : error ? "-" : productos.length, etiqueta: "productos" },
     { valor: "2023", etiqueta: "desde" },
     { valor: "Huila", etiqueta: "Garzón" },
   ];
@@ -29,12 +31,12 @@ function Home() {
     <div className="flex flex-col gap-24">
       {/* HERO */}
       <section className="relative flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden pt-6">
-        <span className="hidden md:block absolute -top-10 -right-4 font-display font-bold text-[280px] leading-none tracking-tighter text-gray-50 select-none pointer-events-none">
+        <span className="hidden md:block absolute -top-10 -right-4 font-display font-bold text-[280px] leading-none tracking-tighter text-gray-500 select-none pointer-events-none">
           01
         </span>
 
         <div className="relative max-w-xl">
-          <span className="inline-flex items-center gap-2 bg-gray-100 rounded-full py-1.5 pl-2.5 pr-3 text-xs font-semibold">
+          <span className="inline-flex items-center gap-2 bg-gray-100 rounded-full py-1.5 pl-3 pr-3 text-xs font-semibold">
             <span className="size-1.5 rounded-full bg-accent"></span>
             Tienda en línea · Garzón, Huila
           </span>
@@ -62,7 +64,7 @@ function Home() {
             </Link>
           </div>
 
-          <div className="flex gap-18 mt-14 pt-8 border-t border-gray-100">
+          <div className="flex gap-10 mt-14 pt-8 border-t border-gray-100">
             {estadisticas.map((e) => (
               <div key={e.etiqueta}>
                 <p className="font-display font-bold text-3xl">{e.valor}</p>
@@ -73,9 +75,8 @@ function Home() {
         </div>
 
         {destacado && (
-          <Link
-          to={"/productos/" + destacado.id}
-          className="relative w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden">
+          <Link to={"/productos/" + destacado._id} className="relative block w-full max-w-md lg:w-105 shrink-0 aspect-square bg-gray-50 rounded-[20px] overflow-hidden"
+          >
             <img
               src={destacado.imagen}
               alt={destacado.nombre}
@@ -88,7 +89,7 @@ function Home() {
                 {destacado.precio}
               </p>
             </div>
-          </Link>
+         </Link>
         )}
       </section>
 
@@ -115,11 +116,16 @@ function Home() {
                 descripcion={p.descripcion}
                 precio={p.precio}
                 imagen={p.imagen}
+                onVer={() => setSeleccionado(p)}
               />
             ))}
           </div>
         )}
       </section>
+      {seleccionado && (
+        <ProductoModal producto={seleccionado} onCerrar={() => setSeleccionado(null)}
+        />
+      )}
     </div>
   );
 }

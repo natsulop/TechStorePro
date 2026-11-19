@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Campo, { claseInput } from "./Campo.jsx";
+import Campo, { claseInput } from "../components/Campo.jsx";
 
 const URL_API = "http://localhost:3000/api/auth";
 const URL_COLOMBIA = "https://api-colombia.com/api/v1";
@@ -14,10 +14,11 @@ const FORM_VACIO = {
   municipio: "",
 };
 
-const dominiosPermitidos = [
-    'gmail.com', 'hotmail.com','outlook.com','yahoo.com',
-    'icloud.com', 'me.com', 'mac.com', 'soy.sena.edu.co',
-  ];
+// Los mismos dominios que acepta el servidor
+const DOMINIOS_PERMITIDOS = [
+    "gmail.com", "hotmail.com", "outlook.com", "yahoo.com",
+    "icloud.com", "me.com", "mac.com", "soy.sena.edu.co"
+];
 
 function porNombre(a, b) {
   return a.name.localeCompare(b.name);
@@ -32,9 +33,7 @@ function Registro() {
   const [departamentos, setDepartamentos] = useState([]);
   const [municipios, setMunicipios] = useState([]);
 
-  const elegido = departamentos.find(
-    (d) => d.name === form.departamento
-  );
+  const elegido = departamentos.find((d) => d.name === form.departamento);
   const departamentoId = elegido ? elegido.id : null;
 
   useEffect(() => {
@@ -49,10 +48,8 @@ function Registro() {
       setMunicipios([]);
       return;
     }
-
     let vigente = true;
-
-    fetch(URL_COLOMBIA + "/Department/" + departamentoId + "/Cities")
+    fetch(URL_COLOMBIA + "/Department/" + departamentoId + "/cities")
       .then((res) => res.json())
       .then((datos) => {
         if (vigente) setMunicipios(datos.sort(porNombre));
@@ -60,7 +57,6 @@ function Registro() {
       .catch(() => {
         if (vigente) setMunicipios([]);
       });
-
     return () => {
       vigente = false;
     };
@@ -69,48 +65,37 @@ function Registro() {
   function manejarCambio(e) {
     const { name, value } = e.target;
     const nuevo = { ...form, [name]: value };
-
     if (name === "departamento") nuevo.municipio = "";
-
     setForm(nuevo);
     setErrores({ ...errores, [name]: "" });
-
-    if (estado === "inactivo") setEstado("inactivo");
+    if (estado !== "inactivo") setEstado("inactivo");
   }
 
   function validar() {
     const nuevos = {};
-
     if (form.nombre.trim().length < 3) {
       nuevos.nombre = "Escribe tu nombre completo (mínimo 3 caracteres)";
     }
-
-   if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-    nuevos.email = "Escribe un correo válido, como nombre@gmail.com";
-} else {
-    const dominio = form.email.slice(form.email.lastIndexOf("@") + 1).toLowerCase();
-
-    if (!DOMINIOS_PERMITIDOS.includes(dominio)) {
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+      nuevos.email = "Escribe un correo válido, como nombre@correo.com";
+    } else {
+      const dominio = form.email.slice(form.email.lastIndexOf('@') + 1).toLowerCase();
+      if (!DOMINIOS_PERMITIDOS.includes(dominio)) {
         nuevos.email = "Usa un correo de Gmail, Hotmail, Outlook, Yahoo o iCloud";
+      }
     }
-}
-
     if (form.password.length < 6) {
       nuevos.password = "La contraseña debe tener al menos 6 caracteres";
     }
-
     if (form.confirmar !== form.password) {
       nuevos.confirmar = "Las contraseñas no coinciden";
     }
-
     if (!form.departamento) {
       nuevos.departamento = "Selecciona un departamento";
     }
-
     if (!form.municipio) {
       nuevos.municipio = "Selecciona un municipio";
     }
-
     return nuevos;
   }
 
@@ -119,11 +104,9 @@ function Registro() {
 
     const nuevos = validar();
     setErrores(nuevos);
-
     if (Object.keys(nuevos).length > 0) return;
 
     setEstado("enviando");
-
     try {
       const res = await fetch(URL_API + "/registro", {
         method: "POST",
@@ -136,9 +119,7 @@ function Registro() {
           municipio: form.municipio,
         }),
       });
-
       const datos = await res.json();
-
       if (!res.ok) throw new Error(datos.error || "No se pudo crear la cuenta");
 
       navegar("/login", {
@@ -146,7 +127,7 @@ function Registro() {
       });
     } catch (err) {
       setMensajeError(
-        err instanceof TypeError ? "No se pudo conectar al servidor" : err.message
+        err instanceof TypeError ? "No se pudo conectar al servidor" : err.message,
       );
       setEstado("error");
     }
@@ -158,14 +139,10 @@ function Registro() {
         <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
           Cuenta
         </p>
-
         <h1 className="font-display font-bold text-5xl tracking-tighter mt-4 mb-3">
           Crear cuenta<span className="text-accent">.</span>
         </h1>
-
-        <p className="text-gray-700">
-          Regístrate para comprar en TechStore.
-        </p>
+        <p className="text-gray-700">Regístrate para comprar en TechStore.</p>
       </section>
 
       <form onSubmit={manejarEnvio} noValidate className="flex flex-col gap-5">
@@ -230,7 +207,6 @@ function Registro() {
             className={claseInput(errores.departamento)}
           >
             <option value="">Selecciona un departamento</option>
-
             {departamentos.map((d) => (
               <option key={d.id} value={d.name}>
                 {d.name}
@@ -249,49 +225,39 @@ function Registro() {
             className={claseInput(errores.municipio) + " disabled:opacity-50"}
           >
             <option value="">
-  {form.departamento
-    ? "Selecciona un municipio"
-    : "Primero elige un departamento"}
-</option>
+              {form.departamento ? "Selecciona un municipio" : "Primero elige un departamento"}
+            </option>
+            {municipios.map((m) => (
+              <option key={m.id} value={m.name}>
+                {m.name}
+              </option>
+            ))}
+          </select>
+        </Campo>
 
-{municipios.map((m) => (
-  <option key={m.id} value={m.name}>
-    {m.name}
-  </option>
-))}
-</select>
-</Campo>
+        <button
+          type="submit"
+          disabled={estado === "enviando"}
+          className="bg-ink text-paper px-7 py-3.5 rounded-card text-sm font-semibold enabled:hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {estado === "enviando" ? "Creando cuenta..." : "Crear cuenta →"}
+        </button>
 
-<button
-  type="submit"
-  disabled={estado === "enviando"}
-  className="bg-ink text-paper px-7 py-3.5 rounded-card text-sm font-semibold enabled:hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
->
-  {estado === "enviando" ? "Creando cuenta..." : "Crear cuenta →"}
-</button>
+        {estado === "error" && (
+          <p role="alert" className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark">
+            {mensajeError}
+          </p>
+        )}
+      </form>
 
-{estado === "error" && (
-  <p
-    role="alert"
-    className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark"
-  >
-    {mensajeError}
-  </p>
-)}
-</form>
-
-<p className="text-sm text-gray-700">
-  ¿Ya tienes cuenta?{" "}
-  <Link
-    to="/login"
-    className="font-semibold underline hover:text-accent transition-colors"
-  >
-    Ingresa
-  </Link>
-</p>
-</div>
-);
-
+      <p className="text-sm text-gray-700">
+        ¿Ya tienes cuenta?{" "}
+        <Link to="/login" className="font-semibold underline hover:text-accent transition-colors">
+          Ingresa
+        </Link>
+      </p>
+    </div>
+  );
 }
 
 export default Registro;

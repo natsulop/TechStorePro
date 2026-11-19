@@ -17,7 +17,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col gap-3 text-sm text-gray-700">
             <p>
-              Calle 7 # 8-30<br />
+              Calle 7 # 8-30 <br />
               Garzón, Huila, Colombia
             </p>
             <p>info@miproyecto.co</p>
@@ -71,15 +71,15 @@ function Footer() {
         {/* TEXTO LEGAL */}
         <div className="flex flex-col md:flex-row justify-between gap-4 mt-8 text-xs">
           <p className="max-w-xs text-gray-500 leading-relaxed">
-            Proyecto formativo SENA ADSO - Ficha 3229944. Tecnología con asesoría real.
+            Proyecto formativo SENA ADSO · Ficha 3229944. Tecnología con asesoría real.
           </p>
-          <p className="font-mono text-gray-500">© 2026 - Fase 5 React & Tailwind</p>
+          <p className="font-mono text-gray-500">© 2026 – Fase 5 React & Tailwind</p>
         </div>
 
-        {/* WORDMARK GIGANTE, RECORTADO ABAJO */}
+        {/* WORDMARK GIGANTE, RECORTADO ABAJO (Aumentado de tamaño) */}
         <p
           aria-hidden="true"
-          className="font-wordmark whitespace-nowrap leading-none text-center select-none text-[clamp(2rem,8.2vw,7.5rem)] text-gray-100 mt-12 mb-[-0.18em]"
+          className="font-wordmark whitespace-nowrap leading-none text-center select-none text-[clamp(2.5rem,10.5vw,9.5rem)] text-gray-100 mt-12 mb-[-0.18em]"
         >
           TECH<span className="text-accent/20">STORE</span>
         </p>

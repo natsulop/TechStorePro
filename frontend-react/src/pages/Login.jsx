@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { AuthContext } from "./Authcontext.jsx";
-import Campo, { claseInput } from "./Campo.jsx";
+import { AuthContext } from "../context/AuthContext";
+import Campo, { claseInput } from "../components/Campo.jsx";
 
 const URL_API = "http://localhost:3000/api/auth";
 
@@ -12,6 +12,7 @@ function Login() {
   const navegar = useNavigate();
   const ubicacion = useLocation();
   const aviso = ubicacion.state ? ubicacion.state.aviso : null;
+  const destino = ubicacion.state ? ubicacion.state.desde : null;
   const [form, setForm] = useState(FORM_VACIO);
   const [errores, setErrores] = useState({});
   const [estado, setEstado] = useState("inactivo");
@@ -20,20 +21,17 @@ function Login() {
   function manejarCambio(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrores({ ...errores, [e.target.name]: "" });
-    if (estado === "error") setEstado("inactivo");
+    if (estado !== "inactivo") setEstado("inactivo");
   }
 
   function validar() {
     const nuevos = {};
-
     if (!/^\S+@\S+\.\S+$/.test(form.email)) {
       nuevos.email = "Escribe un correo válido, como nombre@correo.com";
     }
-
     if (!form.password) {
       nuevos.password = "Escribe tu contraseña";
     }
-
     return nuevos;
   }
 
@@ -45,58 +43,45 @@ function Login() {
     if (Object.keys(nuevos).length > 0) return;
 
     setEstado("enviando");
-
     try {
       const res = await fetch(URL_API + "/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       const datos = await res.json();
-
       if (!res.ok) throw new Error(datos.error || "No se pudo iniciar sesión");
 
       login(datos.nombre, datos.token, datos.rol);
-      navegar("/");
+      navegar(destino || "/");
     } catch (err) {
       setMensajeError(
-        err instanceof TypeError
-          ? "No se pudo conectar al servidor"
-          : err.message
+        err instanceof TypeError ? "No se pudo conectar al servidor" : err.message,
       );
-
       setEstado("error");
     }
   }
-
+   
   return (
     <div className="max-w-md mx-auto flex flex-col gap-8 pt-6">
       <section>
         <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
           Cuenta
         </p>
-
         <h1 className="font-display font-bold text-5xl tracking-tighter mt-4 mb-3">
           Ingresar<span className="text-accent">.</span>
         </h1>
-
-        <p className="text-gray-700">
-          Entra con tu correo y tu contraseña.
-        </p>
+        <p className="text-gray-700">Entra con tu correo y tu contraseña.</p>
       </section>
+
       {aviso && (
-        <p role="status" className="bg-gray-50 rounded-card p-4 text-sm font-semibold">
-        {aviso}
+        <p role="status" className="bg-gray-50 rounded-card p-4 text-sm font-semilbod">
+            {aviso}
         </p>
       )}
 
       <form onSubmit={manejarEnvio} noValidate className="flex flex-col gap-5">
-        <Campo
-          etiqueta="Correo electrónico"
-          nombre="email"
-          error={errores.email}
-        >
+        <Campo etiqueta="Correo electrónico" nombre="email" error={errores.email}>
           <input
             id="email"
             name="email"
@@ -109,11 +94,7 @@ function Login() {
           />
         </Campo>
 
-        <Campo
-          etiqueta="Contraseña"
-          nombre="password"
-          error={errores.password}
-        >
+        <Campo etiqueta="Contraseña" nombre="password" error={errores.password}>
           <input
             id="password"
             name="password"
@@ -135,10 +116,7 @@ function Login() {
         </button>
 
         {estado === "error" && (
-          <p
-            role="alert"
-            className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark"
-          >
+          <p role="alert" className="bg-gray-50 rounded-card p-4 text-sm font-semibold text-accent-dark">
             {mensajeError}
           </p>
         )}
@@ -146,10 +124,7 @@ function Login() {
 
       <p className="text-sm text-gray-700">
         ¿No tienes cuenta?{" "}
-        <Link
-          to="/registro"
-          className="font-semibold underline hover:text-accent transition-colors"
-        >
+        <Link to="/registro" className="font-semibold underline hover:text-accent transition-colors">
           Regístrate
         </Link>
       </p>
@@ -158,3 +133,4 @@ function Login() {
 }
 
 export default Login;
+
