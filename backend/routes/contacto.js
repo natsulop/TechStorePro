@@ -1,7 +1,7 @@
 // 1. Importar dependencias
 const express = require('express');
 const Mensaje = require('../models/Mensajes');
-const router  = express.Router();
+const router = express.Router();
 
 // 2. POST /api/contacto – público: cualquier visitante puede escribir
 router.post('/', async (req, res) => {

@@ -1,7 +1,7 @@
 // 1. Importar Mongoose
 const mongoose = require('mongoose');
 
-// 2. Schema del mensaje de contacto - las reglas viven aquí, en el servidor.
+// 2. Schema del mensaje de contacto – las reglas viven aquí, en el servidor.
 //    Cada regla es [valor, 'texto del error']: ese texto llega hasta el formulario.
 const mensajeSchema = new mongoose.Schema({
   nombre: {
@@ -42,6 +42,6 @@ const mensajeSchema = new mongoose.Schema({
   fecha: { type: Date, default: Date.now }
 });
 
-// 3. Exportar el Model - Mongoose guarda en la colección 'mensajes'
+// 3. Exportar el Model – Mongoose guarda en la colección 'mensajes'
 const Mensaje = mongoose.model('Mensaje', mensajeSchema);
 module.exports = Mensaje;
