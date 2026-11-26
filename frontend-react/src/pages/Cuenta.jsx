@@ -14,7 +14,14 @@ const SECCIONES = [
   },
   {
     titulo: "Compras",
-    enlaces: [{ ruta: "/cuenta/pedidos", texto: "Mis pedidos" }],
+    enlaces: [
+      { ruta: "/cuenta/pedidos", texto: "Mis pedidos" },
+      { ruta: "/cuenta/favoritos", texto: "Favoritos" },
+    ],
+  },
+  {
+    titulo: "Seguridad",
+    enlaces: [{ ruta: "/cuenta/seguridad", texto: "Cambiar contraseña" }],
   },
 ];
 
@@ -25,11 +32,9 @@ function Cuenta() {
   if (!usuario) {
     return (
       <section className="max-w-md mx-auto text-center flex flex-col items-center gap-5 py-16">
-        <h1 className="font-display font-bold text-4xl tracking-tight">
-          Inicia sesión para ver tu cuenta
-          <span className="text-accent">.</span>
+        <h1 className="font-display font-bold text-4xl tracking-tighter">
+          Inicia sesión para ver tu cuenta<span className="text-accent">.</span>
         </h1>
-
         <Link
           to="/login"
           state={{ aviso: "Inicia sesión para ver tu cuenta", desde: "/cuenta" }}
